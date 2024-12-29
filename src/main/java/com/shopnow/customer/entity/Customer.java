@@ -1,6 +1,6 @@
 package com.shopnow.customer.entity;
 
-import com.shopnow.customer.validator.UniqueEmail;
+import com.shopnow.customer.annotation.UniqueEmail;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -23,10 +23,9 @@ public class Customer {
     @Size(min = 2, max = 30, message = "Name must be between 2 and 30 characters")
     private String name;
 
-    @UniqueEmail(message = "Email must be unique")
-    @Column(unique = true)
     @NotEmpty(message = "Email is mandatory")
     @Email(message = "Email should be valid")
+    @UniqueEmail
     private String email;
 
     @NotEmpty(message = "Address is mandatory")

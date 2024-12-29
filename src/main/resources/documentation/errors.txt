@@ -1,0 +1,1 @@
+[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: jakarta.validation.ValidationException: HV000064: Unable to instantiate ConstraintValidator: com.shopnow.customer.validator.UniqueEmailValidator.] with root cause

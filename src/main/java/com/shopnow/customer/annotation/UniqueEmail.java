@@ -1,5 +1,6 @@
-package com.shopnow.customer.validator;
+package com.shopnow.customer.annotation;
 
+import com.shopnow.customer.validator.UniqueEmailValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -8,11 +9,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = UniqueEmailValidator.class)
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = UniqueEmailValidator.class)
 public @interface UniqueEmail {
-    String message() default "Email must be unique";
+    public String message() default "Email must be unique";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

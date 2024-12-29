@@ -1,13 +1,16 @@
 package com.shopnow.customer.repository.impl;
 
 import com.shopnow.customer.entity.Customer;
+import com.shopnow.customer.exception.DuplicateEmailException;
 import com.shopnow.customer.repository.CustomerRepository;
-import jakarta.validation.ConstraintValidatorContext;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class CustomerService {
@@ -22,7 +25,7 @@ public class CustomerService {
      * @return the persisted entity
      */
     public Customer saveCustomer(Customer customer) {
-        return customerRepository.save(customer);
+        return saveData(customer);
     }
 
     /**
@@ -57,7 +60,7 @@ public class CustomerService {
             eCustomer.setEmail(customer.getEmail());
             eCustomer.setAddress(customer.getAddress());
             eCustomer.setPincode(customer.getPincode());
-            return customerRepository.save(eCustomer);
+            return saveData(eCustomer);
         } else {
             throw new RuntimeException("Customer not found");
         }
@@ -70,5 +73,22 @@ public class CustomerService {
      */
     public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);
+    }
+
+    /**
+     * Save a customer.
+     *
+     * @param customer the entity to save
+     * @return the persisted entity
+     */
+    public Customer saveData(Customer customer) {
+        try {
+            return customerRepository.save(customer);
+        } catch (DataIntegrityViolationException ex) {
+            if (ex.getCause() instanceof ConstraintViolationException) {
+                throw new DuplicateEmailException("Email is already in use!");
+            }
+            throw ex;
+        }
     }
 }
