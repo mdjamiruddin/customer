@@ -1,9 +1,11 @@
 package com.shopnow.customer.controller;
 
 import com.shopnow.customer.build.Computer;
+import com.shopnow.customer.dto.CustomerDto;
 import com.shopnow.customer.entity.Customer;
 import com.shopnow.customer.repository.impl.CustomerService;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,20 +20,15 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping(value="/test")
-    public String test(){
-        return "Welcome to Java";
-    }
-
     @PostMapping(value="/add")
-    public ResponseEntity<Customer> add(@Valid @RequestBody Customer customer){
-        Customer newCustomer = customerService.saveCustomer(customer);
-        return ResponseEntity.ok(newCustomer);
+    public ResponseEntity<CustomerDto> add(@Valid @RequestBody CustomerDto customerDto){
+        CustomerDto resCustomerDto = customerService.saveCustomer(customerDto);
+        return ResponseEntity.ok(resCustomerDto);
     }
 
     @GetMapping(value="/list")
-    public ResponseEntity<List<Customer>> getAllCustomers() {
-        List<Customer> customers = customerService.getAllCustomers();
+    public ResponseEntity<List<CustomerDto>> getAllCustomers() {
+        List<CustomerDto> customers = customerService.getAllCustomers();
         return ResponseEntity.ok(customers);
     }
 
@@ -41,9 +38,9 @@ public class CustomerController {
     }
 
     @PostMapping(value="/update/{id}")
-    public ResponseEntity<Customer> update(@PathVariable Long id, @RequestBody Customer customer){
-        Customer newCustomer = customerService.updateCustomer(id, customer);
-        return ResponseEntity.ok(newCustomer);
+    public ResponseEntity<CustomerDto> update(@PathVariable Long id, @Valid @RequestBody CustomerDto customerDto){
+        CustomerDto resCustomer = customerService.updateCustomer(id, customerDto);
+        return ResponseEntity.ok(resCustomer);
     }
 
     @GetMapping(value="/delete/{id}")
