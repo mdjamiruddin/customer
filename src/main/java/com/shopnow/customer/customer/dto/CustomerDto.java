@@ -1,6 +1,6 @@
 package com.shopnow.customer.customer.dto;
 
-import com.shopnow.customer.annotation.UniqueEmail;
+import com.shopnow.customer.common.annotation.UniqueEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

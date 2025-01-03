@@ -1,4 +1,4 @@
-package com.shopnow.customer.exception;
+package com.shopnow.customer.common.exception;
 
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;

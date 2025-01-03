@@ -2,7 +2,7 @@ package com.shopnow.customer.customer.controller;
 
 import com.shopnow.customer.customer.dto.CustomerDto;
 import com.shopnow.customer.customer.entity.Customer;
-import com.shopnow.customer.customer.repository.impl.CustomerService;
+import com.shopnow.customer.customer.service.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

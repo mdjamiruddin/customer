@@ -1,6 +1,6 @@
-package com.shopnow.customer.annotation;
+package com.shopnow.customer.common.annotation;
 
-import com.shopnow.customer.annotation.validator.UniqueEmailValidator;
+import com.shopnow.customer.common.annotation.validator.UniqueEmailValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

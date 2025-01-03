@@ -1,69 +1,56 @@
-package com.shopnow.customer.customer.repository.impl;
+package com.shopnow.customer.customer.service.impl;
 
+import com.shopnow.customer.common.exception.DuplicateEmailException;
+import com.shopnow.customer.common.util.Mapper;
 import com.shopnow.customer.customer.dto.CustomerDto;
 import com.shopnow.customer.customer.entity.Customer;
-import com.shopnow.customer.exception.DuplicateEmailException;
 import com.shopnow.customer.customer.repository.CustomerRepository;
+import com.shopnow.customer.customer.service.CustomerService;
 import org.hibernate.exception.ConstraintViolationException;
-import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-
 @Service
-public class CustomerService {
-    private final CustomerRepository customerRepository;
-    private final ModelMapper modelMapper;
+public class CustomerServiceImpl implements CustomerService {
+    private CustomerRepository customerRepository;
+    private Mapper mapper;
 
-    public CustomerService(CustomerRepository customerRepository, ModelMapper modelMapper) {
+    public CustomerServiceImpl(CustomerRepository customerRepository, Mapper mapper) {
         this.customerRepository = customerRepository;
-        this.modelMapper = modelMapper;
+        this.mapper = mapper;
     }
 
-    /**
-     * Save a customer.
-     *
-     * @param customerDto the entity to save
-     * @return the persisted entity
-     */
+    @Override
     public CustomerDto saveCustomer(CustomerDto customerDto) {
-        Customer customer = modelMapper.map(customerDto, Customer.class);
+        Customer customer = mapper.mapToCustomerEntity(customerDto);
         Customer resCustomer = saveData(customer);
-        CustomerDto resCustomerDto = modelMapper.map(resCustomer, CustomerDto.class);
+        CustomerDto resCustomerDto = mapper.mapToCustomerDto(resCustomer);
+
         return resCustomerDto;
     }
 
-    /**
-     * get all customers.
-     *
-     * @return the persisted entity
-     */
+    @Override
     public List<CustomerDto> getAllCustomers() {
         List<Customer> customers = customerRepository.findAll();
         return customers.stream()
-                .map(customer -> modelMapper.map(customer, CustomerDto.class))
+                .map(customer -> mapper.mapToCustomerDto(customer))
                 .collect(Collectors.toList());
     }
 
-    /**
-     * get all customers.
-     *
-     * @return the persisted entity
-     */
+    @Override
     public Optional<Customer> getCustomerById(Long id) {
         return customerRepository.findById(id);
     }
 
-    /**
-     * Update a customer
-     *
-     * @param CustomerDto the entity to save
-     * @return the persisted entity
-     */
+    @Override
+    public void deleteCustomer(Long id) {
+        customerRepository.deleteById(id);
+    }
+
+    @Override
     public CustomerDto updateCustomer(Long id, CustomerDto customerDto) {
         customerDto.setId(id);
         // Find the existing customer by ID
@@ -78,23 +65,14 @@ public class CustomerService {
             // Save the updated customer entity
             Customer resCustomer = customerRepository.save(customer);
             // Convert the updated customer entity to a CustomerDto
-            return modelMapper.map(resCustomer, CustomerDto.class);
+            return mapper.mapToCustomerDto(resCustomer);
         } else {
             throw new RuntimeException("Customer not found with ID: " + id);
         }
     }
 
     /**
-     * Delete the product by ID.
-     *
-     * @param id the ID of the entity
-     */
-    public void deleteCustomer(Long id) {
-        customerRepository.deleteById(id);
-    }
-
-    /**
-     * Save a customer.
+     * Save a customer
      *
      * @param customer the entity to save
      * @return the persisted entity
@@ -108,9 +86,5 @@ public class CustomerService {
             }
             throw ex;
         }
-    }
-
-    public boolean existsByEmail(String email, Long id){
-        return customerRepository.existsByEmailAndIdNot(email, id);
     }
 }

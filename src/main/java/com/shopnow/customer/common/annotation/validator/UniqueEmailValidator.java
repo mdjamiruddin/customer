@@ -1,7 +1,8 @@
-package com.shopnow.customer.annotation.validator;
+package com.shopnow.customer.common.annotation.validator;
 
-import com.shopnow.customer.annotation.UniqueEmail;
-import com.shopnow.customer.customer.repository.impl.CustomerService;
+import com.shopnow.customer.common.annotation.UniqueEmail;
+import com.shopnow.customer.customer.repository.CustomerRepository;
+import com.shopnow.customer.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import jakarta.validation.ConstraintValidator;
@@ -11,7 +12,7 @@ import jakarta.validation.ConstraintValidatorContext;
 public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
 
     @Autowired
-    private CustomerService customerService;
+    private CustomerRepository customerRepository;
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
@@ -20,6 +21,6 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, St
             return true; // Allow null or empty emails; other annotations handle this.
         }
         Long id = Long.valueOf(0);
-        return !customerService.existsByEmail(email, id);
+        return !customerRepository.existsByEmailAndIdNot(email, id);
     }
 }

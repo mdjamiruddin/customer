@@ -1,4 +1,4 @@
-package com.shopnow.customer.exception;
+package com.shopnow.customer.common.exception;
 
 public class DuplicateEmailException extends RuntimeException {
     public DuplicateEmailException(String message) {
