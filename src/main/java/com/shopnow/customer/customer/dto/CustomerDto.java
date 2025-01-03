@@ -1,4 +1,4 @@
-package com.shopnow.customer.dto;
+package com.shopnow.customer.customer.dto;
 
 import com.shopnow.customer.annotation.UniqueEmail;
 import jakarta.validation.constraints.Email;

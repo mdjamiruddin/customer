@@ -1,16 +1,13 @@
-package com.shopnow.customer.controller;
+package com.shopnow.customer.customer.controller;
 
-import com.shopnow.customer.build.Computer;
-import com.shopnow.customer.dto.CustomerDto;
-import com.shopnow.customer.entity.Customer;
-import com.shopnow.customer.repository.impl.CustomerService;
+import com.shopnow.customer.customer.dto.CustomerDto;
+import com.shopnow.customer.customer.entity.Customer;
+import com.shopnow.customer.customer.repository.impl.CustomerService;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,25 +45,4 @@ public class CustomerController {
         customerService.deleteCustomer(id);
         return ResponseEntity.ok("Customer deleted successfully");
     }
-
-    @GetMapping(value="/computer")
-    public ResponseEntity<Computer> getComputer() {
-        /*
-       Computer computer = new Computer
-               .ComputerBuilder("500 GB", "2 GB")
-               .setBluetoothEnabled(true)
-               .setGraphicsCardEnabled(true)
-               .build();
-         */
-
-        Computer computer = new Computer
-                .ComputerBuilder()
-                .setHDD("500 GB")
-                .setRAM("2 GB")
-                .setBluetoothEnabled(true)
-                .setGraphicsCardEnabled(true)
-                .build();
-        return ResponseEntity.ok(computer);
-    }
-
 }

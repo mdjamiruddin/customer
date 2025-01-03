@@ -1,4 +1,4 @@
-package com.shopnow.customer.entity;
+package com.shopnow.customer.customer.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

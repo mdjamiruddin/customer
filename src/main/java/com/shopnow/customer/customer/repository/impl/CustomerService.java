@@ -1,12 +1,11 @@
-package com.shopnow.customer.repository.impl;
+package com.shopnow.customer.customer.repository.impl;
 
-import com.shopnow.customer.dto.CustomerDto;
-import com.shopnow.customer.entity.Customer;
+import com.shopnow.customer.customer.dto.CustomerDto;
+import com.shopnow.customer.customer.entity.Customer;
 import com.shopnow.customer.exception.DuplicateEmailException;
-import com.shopnow.customer.repository.CustomerRepository;
+import com.shopnow.customer.customer.repository.CustomerRepository;
 import org.hibernate.exception.ConstraintViolationException;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 

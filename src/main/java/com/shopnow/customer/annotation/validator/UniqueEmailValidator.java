@@ -1,10 +1,7 @@
-package com.shopnow.customer.validator;
+package com.shopnow.customer.annotation.validator;
 
 import com.shopnow.customer.annotation.UniqueEmail;
-import com.shopnow.customer.dto.CustomerDto;
-import com.shopnow.customer.repository.CustomerRepository;
-import com.shopnow.customer.repository.impl.CustomerService;
-import org.springframework.beans.BeanWrapperImpl;
+import com.shopnow.customer.customer.repository.impl.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import jakarta.validation.ConstraintValidator;

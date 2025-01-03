@@ -1,10 +1,8 @@
-package com.shopnow.customer.repository;
+package com.shopnow.customer.customer.repository;
 
-import com.shopnow.customer.entity.Customer;
+import com.shopnow.customer.customer.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
